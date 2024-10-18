@@ -29,10 +29,6 @@
         .hidden {
             display: none; /* کلاس برای پنهان کردن عناصر */
         }
-        .moveDown {
-            position: absolute;
-            bottom: 20px; /* جابجایی به پایین صفحه */
-        }
     </style>
 </head>
 <body>
@@ -43,15 +39,16 @@
     <script>
         const button = document.getElementById('toggleButton');
         const audio = document.getElementById('audio');
-        const fixedVolume = 0.2; // مقدار صدای ثابت
+        let intervalId; // شناسه برای استفاده در clearInterval
+        let volume = 0.2; // مقدار صدای شروع
 
-        // تابع برای تنظیم دائم صدای آهنگ
-        const keepVolumeFixed = () => {
-            audio.volume = fixedVolume; // تنظیم صدای ثابت
+        // تابع برای افزایش صدا هر ۱۰ میلی‌ثانیه
+        const increaseVolume = () => {
+            if (volume < 1) {
+                volume += 0.01; // افزایش تدریجی صدا
+                audio.volume = volume;
+            }
         };
-
-        // تنظیم اولیه صدای آهنگ
-        keepVolumeFixed();
 
         button.addEventListener('click', () => {
             document.body.style.backgroundColor = '#ffffff'; // تغییر به رنگ سفید
@@ -61,10 +58,14 @@
             if (button.textContent === 'OFF') {
                 button.textContent = 'ON';
                 audio.play();
+                intervalId = setInterval(increaseVolume, 10); // افزایش صدا هر 10 میلی‌ثانیه
             } else {
                 button.textContent = 'OFF';
                 audio.pause();
                 audio.currentTime = 0; // ریست کردن آهنگ
+                clearInterval(intervalId); // متوقف کردن افزایش صدا
+                volume = 0.2; // ریست کردن حجم صدا
+                audio.volume = volume;
             }
         });
 
@@ -74,8 +75,6 @@
             event.returnValue = ''; // نمایش پیام تأیید بستن صفحه
         });
 
-        // جلوگیری از تغییر صدا با استفاده از یک Interval
-        setInterval(keepVolumeFixed, 100); // تنظیم صدا هر 100 میلی‌ثانیه
     </script>
 </body>
 </html>
