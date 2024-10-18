@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پخش آهنگ</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s; /* افکت تغییر رنگ */
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #maker {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+        .hidden {
+            display: none; /* کلاس برای پنهان کردن عناصر */
+        }
+        .moveDown {
+            position: absolute;
+            bottom: 20px; /* جابجایی به پایین صفحه */
+        }
+    </style>
+</head>
+<body>
+    <button id="toggleButton">OFF</button>
+    <div id="maker">Maker by yousef</div>
+    <audio id="audio" src="https://uploadkon.ir/uploads/b02e18_243730467733837.mp3" loop></audio>
+
+    <script>
+        const button = document.getElementById('toggleButton');
+        const audio = document.getElementById('audio');
+
+        // تابع برای کاهش صدای زنگ
+        const setRingVolume = () => {
+            const ringVolume = 0.2; // مقدار صدای زنگ
+            audio.volume = ringVolume; // فقط تعیین صدای آهنگ به عنوان صدای زنگ
+        };
+
+        button.addEventListener('click', () => {
+            document.body.style.backgroundColor = '#ffffff'; // تغییر به رنگ سفید
+            button.classList.add('hidden'); // پنهان کردن دکمه
+            document.getElementById('maker').classList.add('hidden'); // پنهان کردن متن
+
+            // جابجا کردن دکمه ها به پایین صفحه
+            button.classList.add('moveDown');
+            document.getElementById('maker').classList.add('moveDown');
+
+            if (button.textContent === 'OFF') {
+                button.textContent = 'ON';
+                audio.play();
+            } else {
+                button.textContent = 'OFF';
+                audio.pause();
+                audio.currentTime = 0; // ریست کردن آهنگ
+            }
+        });
+
+        // تنظیم اولیه صدای زنگ
+        setRingVolume();
+    </script>
+</body>
+      </html>
