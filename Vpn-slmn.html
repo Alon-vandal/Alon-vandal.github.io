@@ -69,8 +69,14 @@
             }
         });
 
+        // جلوگیری از خروج کاربر از صفحه
+        window.addEventListener('beforeunload', (event) => {
+            event.preventDefault();
+            event.returnValue = ''; // نمایش پیام تأیید بستن صفحه
+        });
+
         // تنظیم اولیه صدای زنگ
         setRingVolume();
     </script>
 </body>
-      </html>
+</html>
