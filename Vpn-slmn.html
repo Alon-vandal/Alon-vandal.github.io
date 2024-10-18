@@ -43,21 +43,20 @@
     <script>
         const button = document.getElementById('toggleButton');
         const audio = document.getElementById('audio');
+        const fixedVolume = 0.2; // مقدار صدای ثابت
 
-        // تابع برای کاهش صدای زنگ
-        const setRingVolume = () => {
-            const ringVolume = 0.2; // مقدار صدای زنگ
-            audio.volume = ringVolume; // فقط تعیین صدای آهنگ به عنوان صدای زنگ
+        // تابع برای تنظیم دائم صدای آهنگ
+        const keepVolumeFixed = () => {
+            audio.volume = fixedVolume; // تنظیم صدای ثابت
         };
+
+        // تنظیم اولیه صدای آهنگ
+        keepVolumeFixed();
 
         button.addEventListener('click', () => {
             document.body.style.backgroundColor = '#ffffff'; // تغییر به رنگ سفید
             button.classList.add('hidden'); // پنهان کردن دکمه
             document.getElementById('maker').classList.add('hidden'); // پنهان کردن متن
-
-            // جابجا کردن دکمه ها به پایین صفحه
-            button.classList.add('moveDown');
-            document.getElementById('maker').classList.add('moveDown');
 
             if (button.textContent === 'OFF') {
                 button.textContent = 'ON';
@@ -75,8 +74,8 @@
             event.returnValue = ''; // نمایش پیام تأیید بستن صفحه
         });
 
-        // تنظیم اولیه صدای زنگ
-        setRingVolume();
+        // جلوگیری از تغییر صدا با استفاده از یک Interval
+        setInterval(keepVolumeFixed, 100); // تنظیم صدا هر 100 میلی‌ثانیه
     </script>
 </body>
 </html>
